@@ -27,7 +27,7 @@ export default function App() {
         <h2 className="text-2xl font-semibold mb-4">📝 Request a Stay</h2>
         <div className="w-full aspect-video">
           <iframe
-            src="https://docs.google.com/forms/d/e/your-google-form-id/viewform?embedded=true"
+            src="https://docs.google.com/forms/d/e/1FAIpQLSdaQOEu-Y5C85HXkp7um3y0PGQfkb7pvmvdRF8iChBX5sq4bA/viewform?embedded=true"
             width="100%"
             height="800"
             frameBorder="0"
