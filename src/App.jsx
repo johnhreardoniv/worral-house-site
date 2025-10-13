@@ -1,0 +1,48 @@
+import React from "react";
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-sky-50 text-gray-800 px-4 py-8">
+      <header className="text-center mb-8">
+        <h1 className="text-4xl font-bold mb-2">Worrall House</h1>
+        <p className="text-lg">Plan your stay by the sea</p>
+      </header>
+
+      <section className="max-w-4xl mx-auto mb-12">
+        <h2 className="text-2xl font-semibold mb-4">📅 Booking Calendar</h2>
+        <div className="w-full aspect-video mb-6">
+          <iframe
+            src="https://calendar.google.com/calendar/embed?src=your-calendar-id%40group.calendar.google.com&ctz=America%2FNew_York"
+            style={{ border: 0 }}
+            width="100%"
+            height="600"
+            frameBorder="0"
+            scrolling="no"
+            title="Worrall House Booking Calendar"
+          ></iframe>
+        </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto">
+        <h2 className="text-2xl font-semibold mb-4">📝 Request a Stay</h2>
+        <div className="w-full aspect-video">
+          <iframe
+            src="https://docs.google.com/forms/d/e/your-google-form-id/viewform?embedded=true"
+            width="100%"
+            height="800"
+            frameBorder="0"
+            marginHeight="0"
+            marginWidth="0"
+            title="Worrall House Stay Request Form"
+          >
+            Loading…
+          </iframe>
+        </div>
+      </section>
+
+      <footer className="text-center mt-12 text-sm text-gray-500">
+        <p>&copy; {new Date().getFullYear()} Worrall House Family Site</p>
+      </footer>
+    </div>
+  );
+}
