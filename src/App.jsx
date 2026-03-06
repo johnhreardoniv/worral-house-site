@@ -200,10 +200,11 @@ function RulesSection() {
             "Check-in: 3:00 PM (or as arranged with the previous guest).",
             "Check-out: 12:00 PM.",
             "Check-in details (keys, lockbox) will be in your confirmation email.",
+            "There are no cleaners — please leave the house clean and ready for the next group.",
           ]} />
 
           <RuleGroup emoji="🏡" title="During Your Stay" color="amber" items={[
-            "Treat the house like Grandpa's house — because it is.",
+            "Treat the house like your grandmother still lives here.",
             "No smoking inside the house.",
             "Quiet hours: 10 PM - 8 AM (be considerate of Hamilton Beach neighbors).",
             "Wash your dishes or run the dishwasher.",
@@ -219,10 +220,12 @@ function RulesSection() {
             </h3>
             <div className="grid gap-2 sm:grid-cols-2">
               {[
-                { emoji: "🛏️", text: "Strip beds & start laundry" },
+                { emoji: "🧹", text: "Clean the house (kitchen, bathrooms, etc.) — leave it ready for the next group" },
+                { emoji: "🛏️", text: "Wash sheets, fold, and place on bed" },
+                { emoji: "🧺", text: "Wash any used towels" },
                 { emoji: "🍽️", text: "Run dishwasher / put away dishes" },
+                { emoji: "🥡", text: "Take home perishable food items" },
                 { emoji: "🗑️", text: "Take out all trash & recycling" },
-                { emoji: "🧹", text: "Sweep sand from floors" },
                 { emoji: "🔒", text: "Lock all windows & doors" },
                 { emoji: "❄️", text: "Turn off AC, lights & fans" },
                 { emoji: "🚿", text: "Make sure outdoor shower is off" },
