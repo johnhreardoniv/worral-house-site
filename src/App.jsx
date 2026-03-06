@@ -130,8 +130,9 @@ function CalendarSection() {
   );
 }
 
+const FORM_ID = "1FAIpQLSdaQOEu-Y5C85HXkp7um3y0PGQfkb7pvmvdRF8iChBX5sq4bA";
 const FORM_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSdaQOEu-Y5C85HXkp7um3y0PGQfkb7pvmvdRF8iChBX5sq4bA/formResponse";
+  "https://docs.google.com/forms/d/e/" + FORM_ID + "/formResponse";
 
 const INITIAL_FORM = {
   fullName: "",
@@ -182,6 +183,10 @@ function BookingSection() {
       "entry.1219318801": form.notes,
       "entry.1548826254":
         "I agree to follow the house rules and leave the house clean for the next guest.",
+      fvv: "1",
+      partialResponse: "[null,null,null,null]",
+      pageHistory: "0",
+      fbzx: String(Date.now()),
     };
 
     try {
