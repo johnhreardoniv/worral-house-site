@@ -169,7 +169,7 @@ function BookingSection() {
     const [startYear, startMonth, startDay] = form.startDate.split("-");
     const [endYear, endMonth, endDay] = form.endDate.split("-");
 
-    const body = new URLSearchParams({
+    const params = {
       "entry.1455743435": form.fullName,
       emailAddress: form.email,
       "entry.1123350866_year": startYear,
@@ -182,15 +182,37 @@ function BookingSection() {
       "entry.1219318801": form.notes,
       "entry.1548826254":
         "I agree to follow the house rules and leave the house clean for the next guest.",
-    });
+    };
 
     try {
-      await fetch(FORM_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: body.toString(),
+      // Submit via hidden iframe to avoid CORS issues
+      const iframe = document.createElement("iframe");
+      iframe.name = "hidden_iframe";
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+
+      const hiddenForm = document.createElement("form");
+      hiddenForm.method = "POST";
+      hiddenForm.action = FORM_URL;
+      hiddenForm.target = "hidden_iframe";
+
+      Object.entries(params).forEach(([key, value]) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = value;
+        hiddenForm.appendChild(input);
       });
+
+      document.body.appendChild(hiddenForm);
+      hiddenForm.submit();
+
+      // Clean up and show success after a short delay
+      setTimeout(() => {
+        hiddenForm.remove();
+        iframe.remove();
+      }, 2000);
+
       setStatus("success");
       setForm(INITIAL_FORM);
     } catch {
