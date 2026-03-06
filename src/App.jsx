@@ -14,7 +14,7 @@ function NavBar({ activeSection }) {
     <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-sky-100 shadow-sm">
       <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
         <a href="#home" className="text-xl font-bold text-sky-800 tracking-tight">
-          Worrall House
+          Worral House
         </a>
         <div className="hidden md:flex gap-1">
           {NAV_ITEMS.map((item) => (
@@ -85,7 +85,7 @@ function HeroSection() {
     >
       <div className="absolute inset-0 bg-gradient-to-b from-sky-900/70 via-sky-800/50 to-sky-900/80" />
       <div className="relative max-w-4xl mx-auto text-center">
-        <h1 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight drop-shadow-lg">Worrall House</h1>
+        <h1 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight drop-shadow-lg">Worral House</h1>
         <p className="text-xl md:text-2xl text-sky-100 mb-2 drop-shadow">21 Worral St, Hamilton Beach, Wareham, MA</p>
         <p className="text-lg text-sky-200 mb-8 drop-shadow">Grandpa's beach house. Our family's place by the sea.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -112,7 +112,7 @@ function CalendarSection() {
     <section id="calendar" className="py-16 px-4 bg-white">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold text-gray-800 mb-2">Booking Calendar</h2>
-        <p className="text-gray-500 mb-6">See who's staying when. Green = available, colored blocks = booked.</p>
+        <p className="text-gray-500 mb-6">See who's staying when.</p>
         <div className="rounded-xl overflow-hidden shadow-md border border-gray-200">
           <iframe
             src="https://calendar.google.com/calendar/embed?src=cd20d33a0eb209d4fdfc8fdba21bdf883e2f5bdb64973dab5014e7c868854cb3%40group.calendar.google.com&ctz=America%2FNew_York&mode=MONTH&showTitle=0&showNav=1&showPrint=0&showCalendars=0"
@@ -121,7 +121,7 @@ function CalendarSection() {
             height="600"
             frameBorder="0"
             scrolling="no"
-            title="Worrall House Booking Calendar"
+            title="Worral House Booking Calendar"
             className="w-full"
           />
         </div>
@@ -160,7 +160,7 @@ function BookingSection() {
             marginHeight="0"
             marginWidth="0"
             scrolling="yes"
-            title="Worrall House Booking Form"
+            title="Worral House Booking Form"
             className="relative w-full bg-white"
             style={{ zIndex: 1 }}
           >
@@ -400,7 +400,7 @@ function Footer() {
   return (
     <footer className="bg-gray-800 text-gray-400 py-8 px-4">
       <div className="max-w-5xl mx-auto text-center text-sm">
-        <p className="mb-1">&copy; {new Date().getFullYear()} Worrall House Family Site</p>
+        <p className="mb-1">&copy; {new Date().getFullYear()} Worral House Family Site</p>
         <p>21 Worral St, Hamilton Beach, Wareham, MA</p>
       </div>
     </footer>
