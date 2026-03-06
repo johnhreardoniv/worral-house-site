@@ -187,6 +187,14 @@ function RulesSection() {
           <span className="block mt-3 text-gray-500 not-italic text-sm font-medium">— Aunt Caroline</span>
         </blockquote>
 
+        <div className="bg-gradient-to-r from-sky-50 to-emerald-50 border border-sky-200 rounded-xl px-6 py-5 text-center shadow-sm mb-10">
+          <p className="text-gray-700 font-medium">
+            Having a family beach house with no rental costs is an incredible opportunity.
+            There are no cleaners — the house will only be as clean as the last person left it.
+            It only works if we all do our part. Let's keep this sustainable for years to come.
+          </p>
+        </div>
+
         <div className="space-y-6">
           <RuleGroup emoji="📅" title="Booking" color="sky" items={[
             "Book through this website — your request isn't confirmed until you get an approval email.",
@@ -210,8 +218,6 @@ function RulesSection() {
             "Wash your dishes or run the dishwasher.",
             "Clean the grill after use.",
             "Rinse sand off at the outdoor shower before coming inside.",
-            "Family and close friends welcome to visit during the day.",
-            "Overnight guests count toward your booking headcount.",
           ]} />
 
           <div className="bg-gradient-to-br from-sky-50 to-sky-100 rounded-xl p-6 shadow-sm border border-sky-200">
