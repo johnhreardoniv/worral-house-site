@@ -166,11 +166,18 @@ function BookingSection() {
 
     setStatus("submitting");
 
+    const [startYear, startMonth, startDay] = form.startDate.split("-");
+    const [endYear, endMonth, endDay] = form.endDate.split("-");
+
     const body = new URLSearchParams({
-      "entry.1751844244": form.fullName,
+      "entry.1455743435": form.fullName,
       emailAddress: form.email,
-      "entry.1123350866": form.startDate,
-      "entry.22115542": form.endDate,
+      "entry.1123350866_year": startYear,
+      "entry.1123350866_month": startMonth,
+      "entry.1123350866_day": startDay,
+      "entry.22115542_year": endYear,
+      "entry.22115542_month": endMonth,
+      "entry.22115542_day": endDay,
       "entry.1482608023": form.guests,
       "entry.1219318801": form.notes,
       "entry.1548826254":
