@@ -138,7 +138,20 @@ function BookingSection() {
         <p className="text-gray-500 mb-6">
           Fill out the form below. You'll get a confirmation email when your dates are approved.
         </p>
-        <div className="rounded-xl overflow-hidden shadow-sm border border-sky-100 bg-white">
+        <div className="relative rounded-xl overflow-hidden shadow-sm border border-sky-100 bg-white" style={{ minHeight: 900 }}>
+          {/* Background message visible after form submission shrinks */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+            <div className="text-4xl mb-4">&#127965;</div>
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">You're all set!</h3>
+            <p className="text-gray-500 max-w-md">
+              Check your email for a confirmation. If the dates are open, you'll
+              receive approval within a few minutes.
+            </p>
+            <p className="text-sm text-gray-400 mt-4">
+              Questions? Reach out at worralhouse@gmail.com
+            </p>
+          </div>
+          {/* Form iframe sits on top */}
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLSey71gR1yRyX7cNmjIgslR_DjVdZN5lnfP8KQMs5xWYNB7xCA/viewform?embedded=true"
             width="100%"
@@ -148,7 +161,8 @@ function BookingSection() {
             marginWidth="0"
             scrolling="yes"
             title="Worrall House Booking Form"
-            className="w-full"
+            className="relative w-full bg-white"
+            style={{ zIndex: 1 }}
           >
             Loading...
           </iframe>
@@ -371,16 +385,11 @@ function ContactSection() {
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-3xl font-bold text-gray-800 mb-4">Questions?</h2>
         <p className="text-gray-500 mb-6">
-          For anything booking or website related, reach out to Johnny.
+          For anything booking or website related, reach out to Johnny at
         </p>
-        <a
-          href="mailto:worralhouse@gmail.com"
-          className="inline-block bg-sky-600 text-white font-semibold px-8 py-3 rounded-lg shadow hover:bg-sky-700 transition-colors"
-        >
-          Email Johnny
-        </a>
+        <p className="text-lg font-semibold text-gray-800">worralhouse@gmail.com</p>
         <p className="text-sm text-gray-400 mt-8">
-          For urgent house matters or emergencies, contact Uncle Jim directly.
+          For urgent house matters or emergencies, contact Uncle Jim or Aunt Caroline directly.
         </p>
       </div>
     </section>
