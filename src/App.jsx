@@ -86,7 +86,7 @@ function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-sky-900/70 via-sky-800/50 to-sky-900/80" />
       <div className="relative max-w-4xl mx-auto text-center">
         <h1 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight drop-shadow-lg">Worral House</h1>
-        <p className="text-xl md:text-2xl text-sky-100 mb-2 drop-shadow">21 Worral St, Hamilton Beach, Wareham, MA</p>
+        <p className="text-xl md:text-2xl text-sky-100 mb-2 drop-shadow">21 Worral Ave, Hamilton Beach, Wareham, MA</p>
         <p className="text-lg text-sky-200 mb-8 drop-shadow">Grandpa's beach house. Our family's place by the sea.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
@@ -293,7 +293,7 @@ function GuideSection() {
             icon="📍"
             title="Getting There"
             lines={[
-              "21 Worral St, Wareham, MA 02571",
+              "21 Worral Ave, Wareham, MA 02571",
               "Hamilton Beach neighborhood",
               "~60 min from Boston via MA-3 S",
               "~45 min from Providence via I-195 E",
@@ -401,7 +401,7 @@ function Footer() {
     <footer className="bg-gray-800 text-gray-400 py-8 px-4">
       <div className="max-w-5xl mx-auto text-center text-sm">
         <p className="mb-1">&copy; {new Date().getFullYear()} Worral House Family Site</p>
-        <p>21 Worral St, Hamilton Beach, Wareham, MA</p>
+        <p>21 Worral Ave, Hamilton Beach, Wareham, MA</p>
       </div>
     </footer>
   );
