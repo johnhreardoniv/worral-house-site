@@ -131,7 +131,7 @@ function CalendarSection() {
 }
 
 const FORM_ID = "1FAIpQLSdaQOEu-Y5C85HXkp7um3y0PGQfkb7pvmvdRF8iChBX5sq4bA";
-const FORM_URL =
+const FORM_PREFILL_URL =
   "https://docs.google.com/forms/d/e/" + FORM_ID + "/formResponse";
 
 const INITIAL_FORM = {
@@ -170,7 +170,7 @@ function BookingSection() {
     const [startYear, startMonth, startDay] = form.startDate.split("-");
     const [endYear, endMonth, endDay] = form.endDate.split("-");
 
-    const params = {
+    const queryParams = new URLSearchParams({
       "entry.1455743435": form.fullName,
       emailAddress: form.email,
       "entry.1123350866_year": startYear,
@@ -183,40 +183,21 @@ function BookingSection() {
       "entry.1219318801": form.notes,
       "entry.1548826254":
         "I agree to follow the house rules and leave the house clean for the next guest.",
-      fvv: "1",
-      partialResponse: "[null,null,null,null]",
-      pageHistory: "0",
-      fbzx: String(Date.now()),
-    };
+      submit: "Submit",
+    });
 
     try {
-      // Submit via hidden iframe to avoid CORS issues
+      // Load the pre-filled form URL in a hidden iframe — this triggers
+      // Google's own form submission flow, which fires the Apps Script trigger.
       const iframe = document.createElement("iframe");
-      iframe.name = "hidden_iframe";
       iframe.style.display = "none";
+      iframe.src = FORM_PREFILL_URL + "?" + queryParams.toString();
       document.body.appendChild(iframe);
 
-      const hiddenForm = document.createElement("form");
-      hiddenForm.method = "POST";
-      hiddenForm.action = FORM_URL;
-      hiddenForm.target = "hidden_iframe";
-
-      Object.entries(params).forEach(([key, value]) => {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = key;
-        input.value = value;
-        hiddenForm.appendChild(input);
-      });
-
-      document.body.appendChild(hiddenForm);
-      hiddenForm.submit();
-
-      // Clean up and show success after a short delay
+      // Clean up after Google processes the submission
       setTimeout(() => {
-        hiddenForm.remove();
         iframe.remove();
-      }, 2000);
+      }, 5000);
 
       setStatus("success");
       setForm(INITIAL_FORM);
