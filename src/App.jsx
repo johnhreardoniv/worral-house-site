@@ -76,21 +76,28 @@ function MobileMenu() {
 
 function HeroSection() {
   return (
-    <section id="home" className="relative bg-gradient-to-br from-sky-600 to-sky-800 text-white py-20 px-4">
-      <div className="max-w-4xl mx-auto text-center">
-        <h1 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight">Worrall House</h1>
-        <p className="text-xl md:text-2xl text-sky-100 mb-2">21 Worral St, Hamilton Beach, Wareham, MA</p>
-        <p className="text-lg text-sky-200 mb-8">Grandpa's beach house. Our family's place by the sea.</p>
+    <section
+      id="home"
+      className="relative text-white py-28 md:py-36 px-4 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url('/hero-bg.jpg')`,
+      }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-b from-sky-900/70 via-sky-800/50 to-sky-900/80" />
+      <div className="relative max-w-4xl mx-auto text-center">
+        <h1 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight drop-shadow-lg">Worrall House</h1>
+        <p className="text-xl md:text-2xl text-sky-100 mb-2 drop-shadow">21 Worral St, Hamilton Beach, Wareham, MA</p>
+        <p className="text-lg text-sky-200 mb-8 drop-shadow">Grandpa's beach house. Our family's place by the sea.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="#book"
-            className="inline-block bg-white text-sky-800 font-semibold px-8 py-3 rounded-lg shadow hover:bg-sky-50 transition-colors"
+            className="inline-block bg-white text-sky-800 font-semibold px-8 py-3 rounded-lg shadow-lg hover:bg-sky-50 transition-colors"
           >
             Request a Stay
           </a>
           <a
             href="#calendar"
-            className="inline-block border-2 border-white/50 text-white font-semibold px-8 py-3 rounded-lg hover:bg-white/10 transition-colors"
+            className="inline-block border-2 border-white/60 text-white font-semibold px-8 py-3 rounded-lg hover:bg-white/15 transition-colors backdrop-blur-sm"
           >
             View Calendar
           </a>
@@ -123,29 +130,257 @@ function CalendarSection() {
   );
 }
 
+const FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdaQOEu-Y5C85HXkp7um3y0PGQfkb7pvmvdRF8iChBX5sq4bA/formResponse";
+
+const INITIAL_FORM = {
+  fullName: "",
+  email: "",
+  startDate: "",
+  endDate: "",
+  guests: "",
+  notes: "",
+  agreeRules: false,
+};
+
 function BookingSection() {
+  const [form, setForm] = useState(INITIAL_FORM);
+  const [status, setStatus] = useState("idle"); // idle | submitting | success | error
+  const [honeypot, setHoneypot] = useState("");
+
+  const update = (field, value) =>
+    setForm((prev) => ({ ...prev, [field]: value }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (honeypot) {
+      setStatus("success");
+      return;
+    }
+
+    if (form.endDate && form.startDate && form.endDate < form.startDate) {
+      alert("End date must be on or after the start date.");
+      return;
+    }
+
+    setStatus("submitting");
+
+    const body = new URLSearchParams({
+      "entry.1751844244": form.fullName,
+      emailAddress: form.email,
+      "entry.1123350866": form.startDate,
+      "entry.22115542": form.endDate,
+      "entry.1482608023": form.guests,
+      "entry.1219318801": form.notes,
+      "entry.1548826254":
+        "I agree to follow the house rules and leave the house clean for the next guest.",
+    });
+
+    try {
+      await fetch(FORM_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body.toString(),
+      });
+      setStatus("success");
+      setForm(INITIAL_FORM);
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  if (status === "success") {
+    return (
+      <section id="book" className="py-16 px-4 bg-sky-50">
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-10 shadow-sm">
+            <span className="text-4xl mb-4 block">&#10003;</span>
+            <h2 className="text-2xl font-bold text-emerald-800 mb-2">
+              Request Submitted!
+            </h2>
+            <p className="text-emerald-700 mb-6">
+              You'll receive a confirmation email once your dates are approved.
+              Your booking is not confirmed until it appears on the calendar.
+            </p>
+            <button
+              onClick={() => setStatus("idle")}
+              className="text-sky-600 font-medium hover:underline"
+            >
+              Submit another request
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="book" className="py-16 px-4 bg-sky-50">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Request a Stay</h2>
+      <div className="max-w-2xl mx-auto">
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">
+          Request a Stay
+        </h2>
         <p className="text-gray-500 mb-6">
-          Fill out the form below. You'll get a confirmation email when your dates are approved.
-          Your booking is not confirmed until it appears on the calendar.
+          Fill out the form below. You'll get a confirmation email when your
+          dates are approved.
         </p>
-        <div className="rounded-xl overflow-hidden shadow-md bg-white">
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLSdaQOEu-Y5C85HXkp7um3y0PGQfkb7pvmvdRF8iChBX5sq4bA/viewform?embedded=true"
-            width="100%"
-            height="900"
-            frameBorder="0"
-            marginHeight="0"
-            marginWidth="0"
-            title="Worrall House Stay Request Form"
-            className="w-full"
+
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-xl shadow-sm border border-sky-100 p-6 md:p-8 space-y-5"
+        >
+          {/* Honeypot — hidden from humans, bots fill it in */}
+          <div className="absolute opacity-0 pointer-events-none h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
+            <label>
+              Phone
+              <input
+                type="text"
+                name="phone"
+                autoComplete="off"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+              />
+            </label>
+          </div>
+
+          {/* Name & Email */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <label className="block">
+              <span className="text-sm font-medium text-gray-700">
+                Full Name <span className="text-rose-400">*</span>
+              </span>
+              <input
+                type="text"
+                required
+                value={form.fullName}
+                onChange={(e) => update("fullName", e.target.value)}
+                placeholder="Jane Reardon"
+                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none"
+              />
+            </label>
+            <label className="block">
+              <span className="text-sm font-medium text-gray-700">
+                Email <span className="text-rose-400">*</span>
+              </span>
+              <input
+                type="email"
+                required
+                value={form.email}
+                onChange={(e) => update("email", e.target.value)}
+                placeholder="jane@example.com"
+                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none"
+              />
+            </label>
+          </div>
+
+          {/* Dates */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <label className="block">
+              <span className="text-sm font-medium text-gray-700">
+                Start Date <span className="text-rose-400">*</span>
+              </span>
+              <input
+                type="date"
+                required
+                value={form.startDate}
+                onChange={(e) => update("startDate", e.target.value)}
+                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none"
+              />
+            </label>
+            <label className="block">
+              <span className="text-sm font-medium text-gray-700">
+                End Date <span className="text-rose-400">*</span>
+              </span>
+              <input
+                type="date"
+                required
+                value={form.endDate}
+                min={form.startDate || undefined}
+                onChange={(e) => update("endDate", e.target.value)}
+                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none"
+              />
+            </label>
+          </div>
+
+          {/* Guests */}
+          <label className="block">
+            <span className="text-sm font-medium text-gray-700">
+              How many people are staying?{" "}
+              <span className="text-rose-400">*</span>
+            </span>
+            <select
+              required
+              value={form.guests}
+              onChange={(e) => update("guests", e.target.value)}
+              className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none bg-white"
+            >
+              <option value="" disabled>
+                Select...
+              </option>
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          {/* Notes */}
+          <label className="block">
+            <span className="text-sm font-medium text-gray-700">
+              Notes{" "}
+              <span className="text-gray-400 font-normal">(optional)</span>
+            </span>
+            <textarea
+              value={form.notes}
+              onChange={(e) => update("notes", e.target.value)}
+              rows={3}
+              placeholder="Flexible on dates, bringing the dog, etc."
+              className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none resize-y"
+            />
+          </label>
+
+          {/* Agreement */}
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              required
+              checked={form.agreeRules}
+              onChange={(e) => update("agreeRules", e.target.checked)}
+              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-400"
+            />
+            <span className="text-sm text-gray-600">
+              I agree to follow the{" "}
+              <a
+                href="#rules"
+                className="text-sky-600 underline hover:text-sky-800"
+              >
+                house rules
+              </a>{" "}
+              and leave the house clean for the next guest.{" "}
+              <span className="text-rose-400">*</span>
+            </span>
+          </label>
+
+          {/* Submit */}
+          {status === "error" && (
+            <p className="text-sm text-rose-600">
+              Something went wrong. Please try again or email
+              worralhouse@gmail.com.
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={status === "submitting"}
+            className="w-full bg-sky-600 text-white font-semibold px-8 py-3 rounded-lg shadow hover:bg-sky-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Loading...
-          </iframe>
-        </div>
+            {status === "submitting" ? "Submitting..." : "Submit Request"}
+          </button>
+        </form>
       </div>
     </section>
   );
@@ -157,63 +392,74 @@ function RulesSection() {
       <div className="max-w-3xl mx-auto">
         <h2 className="text-3xl font-bold text-gray-800 mb-6">House Rules</h2>
 
-        <blockquote className="border-l-4 border-sky-400 pl-4 mb-8 text-gray-600 italic">
-          "21 Worral is a family house. Enjoy each other's company. That is what your
+        <blockquote className="bg-gradient-to-r from-sky-50 to-amber-50 border-l-4 border-sky-400 rounded-r-xl pl-5 pr-6 py-5 mb-10 text-gray-600 italic shadow-sm">
+          <span className="text-2xl leading-none mr-1">"</span>
+          21 Worral is a family house. Enjoy each other's company. That is what your
           grandparents would want. Everyone is always welcome to use the beach, the yard,
-          the facilities, but just be respectful of whomever is staying there."
-          <span className="block mt-2 text-gray-500 not-italic text-sm">— Aunt Caroline</span>
+          the facilities, but just be respectful of whomever is staying there.
+          <span className="text-2xl leading-none ml-1">"</span>
+          <span className="block mt-3 text-gray-500 not-italic text-sm font-medium">— Aunt Caroline</span>
         </blockquote>
 
-        <div className="space-y-8">
-          <RuleGroup title="Booking" items={[
+        <div className="space-y-6">
+          <RuleGroup emoji="📅" title="Booking" color="sky" items={[
             "Book through this website — your request isn't confirmed until you get an approval email.",
             "First come, first served. If dates overlap, we'll work it out directly.",
-            "Book early for July & August. Try to have summer dates in by April.",
+            "Signups begin April 1st.",
             "Typical stays are 1-2 weeks. Be mindful so everyone gets a turn.",
-            "If plans change, let Johnny know ASAP so someone else can use those dates.",
+            "If plans change, email worralhouse@gmail.com ASAP so someone else can use those dates.",
           ]} />
 
-          <RuleGroup title="Arriving & Leaving" items={[
+          <RuleGroup emoji="🚗" title="Arriving & Leaving" color="emerald" items={[
             "Check-in: 3:00 PM (or as arranged with the previous guest).",
-            "Check-out: 11:00 AM.",
+            "Check-out: 12:00 PM.",
             "Check-in details (keys, lockbox) will be in your confirmation email.",
           ]} />
 
-          <RuleGroup title="During Your Stay" items={[
+          <RuleGroup emoji="🏡" title="During Your Stay" color="amber" items={[
+            "Treat the house like Grandpa's house — because it is.",
             "No smoking inside the house.",
-            "Ask before bringing pets — we need to keep it allergen-friendly.",
             "Quiet hours: 10 PM - 8 AM (be considerate of Hamilton Beach neighbors).",
-            "Rinse sand off at the outdoor shower before coming inside.",
             "Wash your dishes or run the dishwasher.",
             "Clean the grill after use.",
+            "Rinse sand off at the outdoor shower before coming inside.",
             "Family and close friends welcome to visit during the day.",
             "Overnight guests count toward your booking headcount.",
           ]} />
 
-          <div>
-            <h3 className="text-lg font-semibold text-gray-700 mb-3">Checkout Checklist</h3>
-            <div className="bg-sky-50 rounded-lg p-4 space-y-2">
+          <div className="bg-gradient-to-br from-sky-50 to-sky-100 rounded-xl p-6 shadow-sm border border-sky-200">
+            <h3 className="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
+              <span className="text-xl">✅</span> Checkout Checklist
+            </h3>
+            <div className="grid gap-2 sm:grid-cols-2">
               {[
-                "Strip the beds and start laundry (or leave sheets in hamper)",
-                "Run the dishwasher / put away clean dishes",
-                "Take out all trash and recycling",
-                "Sweep sand from floors (especially entryway and bathroom)",
-                "Lock all windows and doors",
-                "Turn off AC, lights, and fans",
-                "Make sure outdoor shower is off",
-                "Secure the key/lockbox",
-                "Report anything broken or needing attention",
+                { emoji: "🛏️", text: "Strip beds & start laundry" },
+                { emoji: "🍽️", text: "Run dishwasher / put away dishes" },
+                { emoji: "🗑️", text: "Take out all trash & recycling" },
+                { emoji: "🧹", text: "Sweep sand from floors" },
+                { emoji: "🔒", text: "Lock all windows & doors" },
+                { emoji: "❄️", text: "Turn off AC, lights & fans" },
+                { emoji: "🚿", text: "Make sure outdoor shower is off" },
+                { emoji: "🔑", text: "Secure the key/lockbox" },
+                { emoji: "📝", text: "Report anything broken" },
               ].map((item, i) => (
-                <label key={i} className="flex items-start gap-2 text-gray-700 text-sm">
-                  <input type="checkbox" className="mt-1 accent-sky-600" />
-                  <span>{item}</span>
+                <label key={i} className="flex items-center gap-2.5 text-gray-700 text-sm bg-white/70 rounded-lg px-3 py-2.5 cursor-pointer hover:bg-white transition-colors">
+                  <input type="checkbox" className="w-4 h-4 accent-sky-600 shrink-0" />
+                  <span className="shrink-0">{item.emoji}</span>
+                  <span>{item.text}</span>
                 </label>
               ))}
             </div>
           </div>
 
-          <RuleGroup title="Costs" items={[
-            "No rental fee — Grandpa and Uncle Jim want you to enjoy the house.",
+          <RuleGroup emoji="🔧" title="Maintenance & Issues" color="rose" items={[
+            "Something broken? Text/call Uncle Jim or Aunt Caroline. Don't try to fix plumbing or electrical yourself.",
+            "Emergency? Call 911 first. Then notify Uncle Jim or Aunt Caroline.",
+            "Supplies running low? Replace what you can, or let someone know.",
+          ]} />
+
+          <RuleGroup emoji="💚" title="Costs" color="emerald" items={[
+            "No rental fee — Grandpa wants you to enjoy the house.",
             "Please replace consumables you use (propane, cleaning supplies, etc.).",
             "If major maintenance comes up, we'll discuss contributions openly.",
           ]} />
@@ -223,14 +469,24 @@ function RulesSection() {
   );
 }
 
-function RuleGroup({ title, items }) {
+const RULE_COLORS = {
+  sky: { bg: "bg-sky-50", border: "border-sky-200", dot: "text-sky-400" },
+  emerald: { bg: "bg-emerald-50", border: "border-emerald-200", dot: "text-emerald-400" },
+  amber: { bg: "bg-amber-50", border: "border-amber-200", dot: "text-amber-400" },
+  rose: { bg: "bg-rose-50", border: "border-rose-200", dot: "text-rose-400" },
+};
+
+function RuleGroup({ emoji, title, color = "sky", items }) {
+  const c = RULE_COLORS[color] || RULE_COLORS.sky;
   return (
-    <div>
-      <h3 className="text-lg font-semibold text-gray-700 mb-3">{title}</h3>
+    <div className={`${c.bg} rounded-xl p-6 shadow-sm border ${c.border}`}>
+      <h3 className="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <span className="text-xl">{emoji}</span> {title}
+      </h3>
       <ul className="space-y-2">
         {items.map((item, i) => (
-          <li key={i} className="flex items-start gap-2 text-gray-600 text-sm">
-            <span className="text-sky-500 mt-0.5 shrink-0">&#8226;</span>
+          <li key={i} className="flex items-start gap-2.5 text-gray-600 text-sm">
+            <span className={`${c.dot} mt-0.5 shrink-0 text-lg leading-none`}>•</span>
             <span>{item}</span>
           </li>
         ))}
@@ -263,7 +519,7 @@ function GuideSection() {
             lines={[
               "Lockbox code sent in confirmation email",
               "Check-in: 3:00 PM",
-              "Check-out: 11:00 AM",
+              "Check-out: 12:00 PM",
               "Please don't share the code outside family",
             ]}
           />
@@ -300,10 +556,10 @@ function GuideSection() {
             icon="📞"
             title="Need Help?"
             lines={[
-              "Booking/house issues: Text Johnny",
-              "House decisions/emergencies: Uncle Jim",
+              "House decisions/emergencies: Uncle Jim or Aunt Caroline",
               "Life-threatening emergency: Call 911",
-              "Something broken? Don't DIY plumbing/electrical — text Johnny",
+              "Something broken? Don't DIY — call Uncle Jim or Aunt Caroline",
+              "Booking questions: email worralhouse@gmail.com",
             ]}
           />
         </div>
