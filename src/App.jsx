@@ -130,272 +130,28 @@ function CalendarSection() {
   );
 }
 
-const FORM_ID = "1FAIpQLSdaQOEu-Y5C85HXkp7um3y0PGQfkb7pvmvdRF8iChBX5sq4bA";
-const FORM_PREFILL_URL =
-  "https://docs.google.com/forms/d/e/" + FORM_ID + "/formResponse";
-
-const INITIAL_FORM = {
-  fullName: "",
-  email: "",
-  startDate: "",
-  endDate: "",
-  guests: "",
-  notes: "",
-  agreeRules: false,
-};
-
 function BookingSection() {
-  const [form, setForm] = useState(INITIAL_FORM);
-  const [status, setStatus] = useState("idle"); // idle | submitting | success | error
-  const [honeypot, setHoneypot] = useState("");
-
-  const update = (field, value) =>
-    setForm((prev) => ({ ...prev, [field]: value }));
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (honeypot) {
-      setStatus("success");
-      return;
-    }
-
-    if (form.endDate && form.startDate && form.endDate < form.startDate) {
-      alert("End date must be on or after the start date.");
-      return;
-    }
-
-    setStatus("submitting");
-
-    const [startYear, startMonth, startDay] = form.startDate.split("-");
-    const [endYear, endMonth, endDay] = form.endDate.split("-");
-
-    const queryParams = new URLSearchParams({
-      "entry.1455743435": form.fullName,
-      emailAddress: form.email,
-      "entry.1123350866_year": startYear,
-      "entry.1123350866_month": startMonth,
-      "entry.1123350866_day": startDay,
-      "entry.22115542_year": endYear,
-      "entry.22115542_month": endMonth,
-      "entry.22115542_day": endDay,
-      "entry.1482608023": form.guests,
-      "entry.1219318801": form.notes,
-      "entry.1548826254":
-        "I agree to follow the house rules and leave the house clean for the next guest.",
-      submit: "Submit",
-    });
-
-    try {
-      // Load the pre-filled form URL in a hidden iframe — this triggers
-      // Google's own form submission flow, which fires the Apps Script trigger.
-      const iframe = document.createElement("iframe");
-      iframe.style.display = "none";
-      iframe.src = FORM_PREFILL_URL + "?" + queryParams.toString();
-      document.body.appendChild(iframe);
-
-      // Clean up after Google processes the submission
-      setTimeout(() => {
-        iframe.remove();
-      }, 5000);
-
-      setStatus("success");
-      setForm(INITIAL_FORM);
-    } catch {
-      setStatus("error");
-    }
-  };
-
-  if (status === "success") {
-    return (
-      <section id="book" className="py-16 px-4 bg-sky-50">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-10 shadow-sm">
-            <span className="text-4xl mb-4 block">&#10003;</span>
-            <h2 className="text-2xl font-bold text-emerald-800 mb-2">
-              Request Submitted!
-            </h2>
-            <p className="text-emerald-700 mb-6">
-              You'll receive a confirmation email once your dates are approved.
-              Your booking is not confirmed until it appears on the calendar.
-            </p>
-            <button
-              onClick={() => setStatus("idle")}
-              className="text-sky-600 font-medium hover:underline"
-            >
-              Submit another request
-            </button>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section id="book" className="py-16 px-4 bg-sky-50">
       <div className="max-w-2xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">
-          Request a Stay
-        </h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">Request a Stay</h2>
         <p className="text-gray-500 mb-6">
-          Fill out the form below. You'll get a confirmation email when your
-          dates are approved.
+          Fill out the form below. You'll get a confirmation email when your dates are approved.
         </p>
-
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white rounded-xl shadow-sm border border-sky-100 p-6 md:p-8 space-y-5"
-        >
-          {/* Honeypot — hidden from humans, bots fill it in */}
-          <div className="absolute opacity-0 pointer-events-none h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
-            <label>
-              Phone
-              <input
-                type="text"
-                name="phone"
-                autoComplete="off"
-                value={honeypot}
-                onChange={(e) => setHoneypot(e.target.value)}
-                tabIndex={-1}
-              />
-            </label>
-          </div>
-
-          {/* Name & Email */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <label className="block">
-              <span className="text-sm font-medium text-gray-700">
-                Full Name <span className="text-rose-400">*</span>
-              </span>
-              <input
-                type="text"
-                required
-                value={form.fullName}
-                onChange={(e) => update("fullName", e.target.value)}
-                placeholder="Jane Reardon"
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none"
-              />
-            </label>
-            <label className="block">
-              <span className="text-sm font-medium text-gray-700">
-                Email <span className="text-rose-400">*</span>
-              </span>
-              <input
-                type="email"
-                required
-                value={form.email}
-                onChange={(e) => update("email", e.target.value)}
-                placeholder="jane@example.com"
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none"
-              />
-            </label>
-          </div>
-
-          {/* Dates */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <label className="block">
-              <span className="text-sm font-medium text-gray-700">
-                Start Date <span className="text-rose-400">*</span>
-              </span>
-              <input
-                type="date"
-                required
-                value={form.startDate}
-                onChange={(e) => update("startDate", e.target.value)}
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none"
-              />
-            </label>
-            <label className="block">
-              <span className="text-sm font-medium text-gray-700">
-                End Date <span className="text-rose-400">*</span>
-              </span>
-              <input
-                type="date"
-                required
-                value={form.endDate}
-                min={form.startDate || undefined}
-                onChange={(e) => update("endDate", e.target.value)}
-                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none"
-              />
-            </label>
-          </div>
-
-          {/* Guests */}
-          <label className="block">
-            <span className="text-sm font-medium text-gray-700">
-              How many people are staying?{" "}
-              <span className="text-rose-400">*</span>
-            </span>
-            <select
-              required
-              value={form.guests}
-              onChange={(e) => update("guests", e.target.value)}
-              className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none bg-white"
-            >
-              <option value="" disabled>
-                Select...
-              </option>
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                <option key={n} value={n}>
-                  {n}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          {/* Notes */}
-          <label className="block">
-            <span className="text-sm font-medium text-gray-700">
-              Notes{" "}
-              <span className="text-gray-400 font-normal">(optional)</span>
-            </span>
-            <textarea
-              value={form.notes}
-              onChange={(e) => update("notes", e.target.value)}
-              rows={3}
-              placeholder="Flexible on dates, bringing the dog, etc."
-              className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none resize-y"
-            />
-          </label>
-
-          {/* Agreement */}
-          <label className="flex items-start gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              required
-              checked={form.agreeRules}
-              onChange={(e) => update("agreeRules", e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-400"
-            />
-            <span className="text-sm text-gray-600">
-              I agree to follow the{" "}
-              <a
-                href="#rules"
-                className="text-sky-600 underline hover:text-sky-800"
-              >
-                house rules
-              </a>{" "}
-              and leave the house clean for the next guest.{" "}
-              <span className="text-rose-400">*</span>
-            </span>
-          </label>
-
-          {/* Submit */}
-          {status === "error" && (
-            <p className="text-sm text-rose-600">
-              Something went wrong. Please try again or email
-              worralhouse@gmail.com.
-            </p>
-          )}
-
-          <button
-            type="submit"
-            disabled={status === "submitting"}
-            className="w-full bg-sky-600 text-white font-semibold px-8 py-3 rounded-lg shadow hover:bg-sky-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        <div className="rounded-xl overflow-hidden shadow-sm border border-sky-100 bg-white">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSey71gR1yRyX7cNmjIgslR_DjVdZN5lnfP8KQMs5xWYNB7xCA/viewform?embedded=true"
+            width="100%"
+            height="1591"
+            frameBorder="0"
+            marginHeight="0"
+            marginWidth="0"
+            title="Worrall House Booking Form"
+            className="w-full"
           >
-            {status === "submitting" ? "Submitting..." : "Submit Request"}
-          </button>
-        </form>
+            Loading...
+          </iframe>
+        </div>
       </div>
     </section>
   );
