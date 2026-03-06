@@ -374,7 +374,7 @@ function ContactSection() {
           For anything booking or website related, reach out to Johnny.
         </p>
         <a
-          href="mailto:johnhreardoniv@gmail.com"
+          href="mailto:worralhouse@gmail.com"
           className="inline-block bg-sky-600 text-white font-semibold px-8 py-3 rounded-lg shadow hover:bg-sky-700 transition-colors"
         >
           Email Johnny
