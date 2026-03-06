@@ -142,10 +142,11 @@ function BookingSection() {
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLSey71gR1yRyX7cNmjIgslR_DjVdZN5lnfP8KQMs5xWYNB7xCA/viewform?embedded=true"
             width="100%"
-            height="1591"
+            height="900"
             frameBorder="0"
             marginHeight="0"
             marginWidth="0"
+            scrolling="yes"
             title="Worrall House Booking Form"
             className="w-full"
           >
@@ -178,7 +179,7 @@ function RulesSection() {
             "First come, first served. If dates overlap, we'll work it out directly.",
             "Signups begin April 1st.",
             "Typical stays are 1-2 weeks. Be mindful so everyone gets a turn.",
-            "If plans change, email worralhouse@gmail.com ASAP so someone else can use those dates.",
+            <>If plans change, email <span className="font-semibold text-gray-800">worralhouse@gmail.com</span> ASAP so someone else can use those dates.</>,
           ]} />
 
           <RuleGroup emoji="🚗" title="Arriving & Leaving" color="emerald" items={[
@@ -370,7 +371,7 @@ function ContactSection() {
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-3xl font-bold text-gray-800 mb-4">Questions?</h2>
         <p className="text-gray-500 mb-6">
-          For booking questions, house issues, or anything else — reach out to Johnny.
+          For anything booking or website related, reach out to Johnny.
         </p>
         <a
           href="mailto:johnhreardoniv@gmail.com"
