@@ -1,5 +1,34 @@
 import React, { useState } from "react";
 
+// Error boundary for graceful error handling
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("Error caught by boundary:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="py-16 px-4 bg-rose-50 rounded-lg border border-rose-200 text-center">
+          <p className="text-rose-800 font-semibold mb-2">Something went wrong</p>
+          <p className="text-rose-700 text-sm">Please refresh the page or contact us at worralhouse@gmail.com</p>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 const NAV_ITEMS = [
   { id: "home", label: "Home" },
   { id: "calendar", label: "Calendar" },
@@ -115,16 +144,23 @@ function CalendarSection() {
         <h2 className="text-3xl font-bold text-gray-800 mb-2">Booking Calendar</h2>
         <p className="text-gray-500 mb-6">See who's staying when.</p>
         <div className="rounded-xl overflow-hidden shadow-md border border-gray-200">
-          <iframe
-            src="https://calendar.google.com/calendar/embed?src=cd20d33a0eb209d4fdfc8fdba21bdf883e2f5bdb64973dab5014e7c868854cb3%40group.calendar.google.com&ctz=America%2FNew_York&mode=MONTH&showTitle=0&showNav=1&showPrint=0&showCalendars=0"
-            style={{ border: 0 }}
-            width="100%"
-            height="600"
-            frameBorder="0"
-            scrolling="no"
-            title="Worral House Booking Calendar"
-            className="w-full"
-          />
+          <ErrorBoundary>
+            <iframe
+              src="https://calendar.google.com/calendar/embed?src=cd20d33a0eb209d4fdfc8fdba21bdf883e2f5bdb64973dab5014e7c868854cb3%40group.calendar.google.com&ctz=America%2FNew_York&mode=MONTH&showTitle=0&showNav=1&showPrint=0&showCalendars=0"
+              style={{ border: 0 }}
+              width="100%"
+              height="600"
+              frameBorder="0"
+              scrolling="no"
+              title="Worral House Booking Calendar"
+              className="w-full"
+            />
+          </ErrorBoundary>
+          <noscript>
+            <div className="p-6 bg-gray-50 text-center">
+              <p className="text-gray-600">Calendar requires JavaScript to display. Please enable JavaScript or contact us.</p>
+            </div>
+          </noscript>
         </div>
       </div>
     </section>
@@ -153,20 +189,31 @@ function BookingSection() {
             </p>
           </div>
           {/* Form iframe sits on top */}
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLSey71gR1yRyX7cNmjIgslR_DjVdZN5lnfP8KQMs5xWYNB7xCA/viewform?embedded=true"
-            width="100%"
-            height="900"
-            frameBorder="0"
-            marginHeight="0"
-            marginWidth="0"
-            scrolling="yes"
-            title="Worral House Booking Form"
-            className="relative w-full bg-white"
-            style={{ zIndex: 1 }}
-          >
-            Loading...
-          </iframe>
+          <ErrorBoundary>
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSey71gR1yRyX7cNmjIgslR_DjVdZN5lnfP8KQMs5xWYNB7xCA/viewform?embedded=true"
+              width="100%"
+              height="900"
+              frameBorder="0"
+              marginHeight="0"
+              marginWidth="0"
+              scrolling="yes"
+              title="Worral House Booking Form"
+              className="relative w-full bg-white"
+              style={{ zIndex: 1 }}
+              onError={() => console.error("Form failed to load")}
+            >
+              <div className="p-6 text-center text-gray-600">
+                <p>Booking form is temporarily unavailable.</p>
+                <p>Please try refreshing the page or email worralhouse@gmail.com to request a stay.</p>
+              </div>
+            </iframe>
+          </ErrorBoundary>
+          <noscript>
+            <div className="p-6 bg-gray-50 text-center">
+              <p className="text-gray-600">Booking form requires JavaScript to display. Please enable JavaScript or email worralhouse@gmail.com.</p>
+            </div>
+          </noscript>
         </div>
       </div>
     </section>
