@@ -179,7 +179,7 @@ function RulesSection() {
 
         <blockquote className="bg-gradient-to-r from-sky-50 to-amber-50 border-l-4 border-sky-400 rounded-r-xl pl-5 pr-6 py-5 mb-10 text-gray-600 italic shadow-sm">
           <span className="text-2xl leading-none mr-1">"</span>
-          21 Worral is a family house. Enjoy each other's company. That is what your
+          Worral is a family house. Enjoy each other's company. That is what your
           grandparents would want. Everyone is always welcome to use the beach, the yard,
           the facilities, but just be respectful of whomever is staying there.
           <span className="text-2xl leading-none ml-1">"</span>
