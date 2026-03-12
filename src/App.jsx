@@ -414,6 +414,7 @@ function Footer() {
     <footer className="bg-gray-800 text-gray-400 py-8 px-4">
       <div className="max-w-5xl mx-auto text-center text-sm">
         <p>&copy; {new Date().getFullYear()} Worral House Family Site</p>
+        <p className="text-xs text-gray-500 mt-2">Hero image by <a href="https://unsplash.com/@sebsch" className="text-sky-400 hover:text-sky-300">Sebastian Scheuer</a> on <a href="https://unsplash.com" className="text-sky-400 hover:text-sky-300">Unsplash</a></p>
       </div>
     </footer>
   );
