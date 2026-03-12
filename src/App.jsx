@@ -305,7 +305,7 @@ function RulesSection() {
           ]} />
 
           <RuleGroup emoji="💚" title="Costs" color="emerald" items={[
-            "No rental fee — Grandpa wants you to enjoy the house.",
+            "No rental fee — this is a family space for everyone to enjoy.",
             "Please replace consumables you use (propane, cleaning supplies, etc.).",
             "If major maintenance comes up, we'll discuss contributions openly.",
           ]} />
