@@ -35,9 +35,7 @@ const NAV_ITEMS = [
   { id: "book", label: "Book a Stay" },
   { id: "rules", label: "House Rules" },
   { id: "guide", label: "Guest Guide" },
-  { id: "faq", label: "FAQ" },
   { id: "contact", label: "Contact" },
-  { id: "privacy", label: "Privacy" },
 ];
 
 function NavBar({ activeSection }) {
@@ -458,98 +456,26 @@ function ContactSection() {
   );
 }
 
-function FAQSection() {
-  const [openFAQ, setOpenFAQ] = React.useState(null);
-
-  const faqs = [
-    {
-      q: "Can I cancel my booking?",
-      a: "Yes. If plans change, email worralhouse@gmail.com immediately so someone else can use those dates. The sooner you cancel, the better.",
-    },
-    {
-      q: "What if I'm late checking in?",
-      a: "Let us know as soon as possible. The check-in details and address are in your confirmation email. Contact Uncle Jim or Aunt Caroline if you'll be arriving after 6 PM.",
-    },
-    {
-      q: "What if something breaks during my stay?",
-      a: "Don't try to fix it yourself. For plumbing, electrical, or appliance issues, call Uncle Jim or Aunt Caroline. For small issues, there's a supply kit in the kitchen.",
-    },
-    {
-      q: "Is there WiFi at the house?",
-      a: "Yes, WiFi password is posted inside the house. Ask for it when you arrive.",
-    },
-    {
-      q: "Can I bring friends or extended family?",
-      a: "Yes, guests are welcome. Just mention in the booking form how many people will be staying.",
-    },
-    {
-      q: "What if there's a family dispute about dates?",
-      a: "Book first, get confirmed. First come, first served. If two requests overlap, we'll discuss and work it out as a family.",
-    },
-    {
-      q: "What counts as an emergency?",
-      a: "Life-threatening medical issues: call 911 first, then contact Uncle Jim or Aunt Caroline. Property damage or safety hazards: contact them immediately. Non-urgent: email worralhouse@gmail.com.",
-    },
-    {
-      q: "Do I need to bring anything?",
-      a: "Bring toiletries and medications. The house has linens, towels, kitchen supplies, and beach gear. Check the Guest Guide for details.",
-    },
-  ];
+function PrivacyModal({ isOpen, onClose }) {
+  if (!isOpen) return null;
 
   return (
-    <section id="faq" className="py-16 px-4 bg-sky-50">
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Frequently Asked Questions</h2>
-        <p className="text-gray-500 mb-8">Quick answers to common questions.</p>
-
-        <div className="space-y-3">
-          {faqs.map((faq, i) => (
-            <div key={i} className="bg-white rounded-lg border border-sky-100 shadow-sm">
-              <button
-                onClick={() => setOpenFAQ(openFAQ === i ? null : i)}
-                className="w-full text-left px-6 py-4 flex items-center justify-between hover:bg-sky-50 transition-colors"
-              >
-                <h3 className="font-semibold text-gray-800">{faq.q}</h3>
-                <svg
-                  className={`w-5 h-5 text-sky-600 transition-transform ${openFAQ === i ? "rotate-180" : ""}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                </svg>
-              </button>
-              {openFAQ === i && (
-                <div className="px-6 pb-4 text-gray-600 text-sm border-t border-sky-100">
-                  {faq.a}
-                </div>
-              )}
-            </div>
-          ))}
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-800">Privacy & Terms</h2>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 text-2xl leading-none"
+            aria-label="Close"
+          >
+            ✕
+          </button>
         </div>
 
-        <div className="mt-8 bg-white rounded-xl p-6 shadow-sm border border-sky-100">
-          <p className="text-sm text-gray-600">
-            <strong>Still have questions?</strong> Email worralhouse@gmail.com — we're happy to help!
-          </p>
-          <p className="text-sm text-gray-600 mt-4 pt-4 border-t border-gray-200">
-            <strong>Privacy Note:</strong> The booking calendar uses initials + dates for privacy (e.g., "JR - Mar 15-22"). Your full contact information is only in your confirmation email.
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function PrivacySection() {
-  return (
-    <section id="privacy" className="py-16 px-4 bg-white">
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">Privacy & Terms</h2>
-
-        <div className="space-y-8">
+        <div className="px-6 py-6 space-y-8">
           <div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">Privacy Policy</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-3">Privacy Policy</h3>
             <div className="text-gray-600 space-y-3 text-sm">
               <p>
                 <strong>Family-Only Site:</strong> This website is intended for family members only. We collect minimal personal information: names, email addresses, and requested dates through the Google Form.
@@ -570,7 +496,7 @@ function PrivacySection() {
           </div>
 
           <div className="border-t pt-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">Terms of Use</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-3">Terms of Use</h3>
             <div className="text-gray-600 space-y-3 text-sm">
               <p>
                 <strong>Booking Process:</strong> Requests are approved automatically if dates are available. Approval confirmations are sent via email with check-in details and address.
@@ -594,15 +520,23 @@ function PrivacySection() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
-function Footer() {
+function Footer({ onOpenPrivacy }) {
   return (
     <footer className="bg-gray-800 text-gray-400 py-8 px-4">
       <div className="max-w-5xl mx-auto text-center text-sm">
         <p>&copy; {new Date().getFullYear()} Worral House Family Site</p>
+        <p className="mt-3">
+          <button
+            onClick={onOpenPrivacy}
+            className="text-sky-400 hover:text-sky-300 transition-colors underline"
+          >
+            Privacy & Terms
+          </button>
+        </p>
         <p className="text-xs text-gray-500 mt-2">Hero image by <a href="https://unsplash.com/@sebsch" className="text-sky-400 hover:text-sky-300">Sebastian Scheuer</a> on <a href="https://unsplash.com" className="text-sky-400 hover:text-sky-300">Unsplash</a></p>
       </div>
     </footer>
@@ -611,6 +545,7 @@ function Footer() {
 
 export default function App() {
   const [activeSection, setActiveSection] = useState("home");
+  const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -640,10 +575,9 @@ export default function App() {
       <BookingSection />
       <RulesSection />
       <GuideSection />
-      <FAQSection />
       <ContactSection />
-      <PrivacySection />
-      <Footer />
+      <Footer onOpenPrivacy={() => setPrivacyModalOpen(true)} />
+      <PrivacyModal isOpen={privacyModalOpen} onClose={() => setPrivacyModalOpen(false)} />
     </div>
   );
 }
