@@ -135,16 +135,16 @@ function BookingSection() {
       <div className="max-w-2xl mx-auto">
         <h2 className="text-3xl font-bold text-gray-800 mb-2">Request a Stay</h2>
         <p className="text-gray-500 mb-6">
-          Fill out the form below. You'll get a confirmation email when your dates are approved.
+          Fill out the form below. If your requested dates are available, you'll automatically receive a confirmation email with check-in details.
         </p>
         <div className="relative rounded-xl overflow-hidden shadow-sm border border-sky-100 bg-white" style={{ minHeight: 900 }}>
           {/* Background message visible after form submission shrinks */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
             <div className="text-4xl mb-4">&#127965;</div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-2">You're all set!</h3>
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">Request submitted!</h3>
             <p className="text-gray-500 max-w-md">
-              Check your email for a confirmation. If the dates are open, you'll
-              receive approval within a few minutes.
+              Your booking will be automatically approved if the dates are available.
+              Check your email for confirmation.
             </p>
             <p className="text-sm text-gray-400 mt-4">
               Questions? Reach out at worralhouse@gmail.com
