@@ -6,6 +6,7 @@ const NAV_ITEMS = [
   { id: "book", label: "Book a Stay" },
   { id: "rules", label: "House Rules" },
   { id: "guide", label: "Guest Guide" },
+  { id: "faq", label: "FAQ" },
   { id: "contact", label: "Contact" },
   { id: "privacy", label: "Privacy" },
 ];
@@ -410,6 +411,86 @@ function ContactSection() {
   );
 }
 
+function FAQSection() {
+  const [openFAQ, setOpenFAQ] = React.useState(null);
+
+  const faqs = [
+    {
+      q: "Can I cancel my booking?",
+      a: "Yes. If plans change, email worralhouse@gmail.com immediately so someone else can use those dates. The sooner you cancel, the better.",
+    },
+    {
+      q: "What if I'm late checking in?",
+      a: "Let us know as soon as possible. The check-in details and address are in your confirmation email. Contact Uncle Jim or Aunt Caroline if you'll be arriving after 6 PM.",
+    },
+    {
+      q: "What if something breaks during my stay?",
+      a: "Don't try to fix it yourself. For plumbing, electrical, or appliance issues, call Uncle Jim or Aunt Caroline. For small issues, there's a supply kit in the kitchen.",
+    },
+    {
+      q: "Is there WiFi at the house?",
+      a: "Yes, WiFi password is posted inside the house. Ask for it when you arrive.",
+    },
+    {
+      q: "Can I bring friends or extended family?",
+      a: "Yes, guests are welcome. Just mention in the booking form how many people will be staying.",
+    },
+    {
+      q: "What if there's a family dispute about dates?",
+      a: "Book first, get confirmed. First come, first served. If two requests overlap, we'll discuss and work it out as a family.",
+    },
+    {
+      q: "What counts as an emergency?",
+      a: "Life-threatening medical issues: call 911 first, then contact Uncle Jim or Aunt Caroline. Property damage or safety hazards: contact them immediately. Non-urgent: email worralhouse@gmail.com.",
+    },
+    {
+      q: "Do I need to bring anything?",
+      a: "Bring toiletries and medications. The house has linens, towels, kitchen supplies, and beach gear. Check the Guest Guide for details.",
+    },
+  ];
+
+  return (
+    <section id="faq" className="py-16 px-4 bg-sky-50">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">Frequently Asked Questions</h2>
+        <p className="text-gray-500 mb-8">Quick answers to common questions.</p>
+
+        <div className="space-y-3">
+          {faqs.map((faq, i) => (
+            <div key={i} className="bg-white rounded-lg border border-sky-100 shadow-sm">
+              <button
+                onClick={() => setOpenFAQ(openFAQ === i ? null : i)}
+                className="w-full text-left px-6 py-4 flex items-center justify-between hover:bg-sky-50 transition-colors"
+              >
+                <h3 className="font-semibold text-gray-800">{faq.q}</h3>
+                <svg
+                  className={`w-5 h-5 text-sky-600 transition-transform ${openFAQ === i ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+              </button>
+              {openFAQ === i && (
+                <div className="px-6 pb-4 text-gray-600 text-sm border-t border-sky-100">
+                  {faq.a}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 bg-white rounded-xl p-6 shadow-sm border border-sky-100">
+          <p className="text-sm text-gray-600">
+            <strong>Still have questions?</strong> Email worralhouse@gmail.com — we're happy to help!
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function PrivacySection() {
   return (
     <section id="privacy" className="py-16 px-4 bg-white">
@@ -509,6 +590,7 @@ export default function App() {
       <BookingSection />
       <RulesSection />
       <GuideSection />
+      <FAQSection />
       <ContactSection />
       <PrivacySection />
       <Footer />
