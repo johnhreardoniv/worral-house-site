@@ -306,7 +306,7 @@ function GuideSection() {
             icon="📍"
             title="Getting There"
             lines={[
-              "21 Worral Ave, Wareham, MA 02571",
+              "Address will be sent in your confirmation email",
               "Hamilton Beach neighborhood",
               "~60 min from Boston via MA-3 S",
               "~45 min from Providence via I-195 E",
@@ -401,7 +401,6 @@ function ContactSection() {
           For anything booking or website related, reach out to Johnny at
         </p>
         <p className="text-lg font-semibold text-gray-800">worralhouse@gmail.com</p>
-        <p className="text-sm text-gray-600 mt-2">21 Worral Ave, Hamilton Beach, Wareham, MA 02571</p>
         <p className="text-sm text-gray-400 mt-8">
           For urgent house matters or emergencies, contact Uncle Jim or Aunt Caroline directly.
         </p>
@@ -414,8 +413,7 @@ function Footer() {
   return (
     <footer className="bg-gray-800 text-gray-400 py-8 px-4">
       <div className="max-w-5xl mx-auto text-center text-sm">
-        <p className="mb-1">&copy; {new Date().getFullYear()} Worral House Family Site</p>
-        <p>21 Worral Ave, Hamilton Beach, Wareham, MA</p>
+        <p>&copy; {new Date().getFullYear()} Worral House Family Site</p>
       </div>
     </footer>
   );
