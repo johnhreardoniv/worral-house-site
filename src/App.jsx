@@ -87,7 +87,7 @@ function HeroSection() {
       <div className="relative max-w-4xl mx-auto text-center">
         <h1 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight drop-shadow-lg">Worral House</h1>
         <p className="text-xl md:text-2xl text-sky-100 mb-2 drop-shadow">21 Worral Ave, Hamilton Beach, Wareham, MA</p>
-        <p className="text-lg text-sky-200 mb-8 drop-shadow">Grandpa's beach house. Our family's place by the sea.</p>
+        <p className="text-lg text-sky-200 mb-8 drop-shadow">Bill and Bettye's beach house. Our family's place by the sea.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="#book"
