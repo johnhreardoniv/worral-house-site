@@ -5,3 +5,19 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Keyboard focus styles for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #0284c7;
+  outline-offset: 2px;
+}
+
+/* Ensure focus visible works on all interactive elements */
+:focus-visible {
+  outline: 2px solid #0284c7;
+  outline-offset: 2px;
+}
