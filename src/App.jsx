@@ -532,6 +532,9 @@ function FAQSection() {
           <p className="text-sm text-gray-600">
             <strong>Still have questions?</strong> Email worralhouse@gmail.com — we're happy to help!
           </p>
+          <p className="text-sm text-gray-600 mt-4 pt-4 border-t border-gray-200">
+            <strong>Privacy Note:</strong> The booking calendar uses initials + dates for privacy (e.g., "JR - Mar 15-22"). Your full contact information is only in your confirmation email.
+          </p>
         </div>
       </div>
     </section>
@@ -555,7 +558,7 @@ function PrivacySection() {
                 <strong>Data Storage:</strong> Booking requests are stored in a Google Sheet restricted to the owner. Google handles all data processing under their privacy policies. We do not share your information with third parties.
               </p>
               <p>
-                <strong>Calendar Data:</strong> The shared Google Calendar displays booking availability and is publicly visible. Do not share personal information in calendar event titles or descriptions.
+                <strong>Calendar Data:</strong> The shared Google Calendar displays booking availability and is publicly visible. For privacy, calendar events use initials + dates only (e.g., "JR - Mar 15-22"). Phone numbers and full names appear only in your confirmation email.
               </p>
               <p>
                 <strong>Email Communications:</strong> We only email confirmations and house information. Your email will not be added to mailing lists or shared.
