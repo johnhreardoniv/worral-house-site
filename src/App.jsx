@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { id: "rules", label: "House Rules" },
   { id: "guide", label: "Guest Guide" },
   { id: "contact", label: "Contact" },
+  { id: "privacy", label: "Privacy" },
 ];
 
 function NavBar({ activeSection }) {
@@ -409,6 +410,63 @@ function ContactSection() {
   );
 }
 
+function PrivacySection() {
+  return (
+    <section id="privacy" className="py-16 px-4 bg-white">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6">Privacy & Terms</h2>
+
+        <div className="space-y-8">
+          <div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">Privacy Policy</h3>
+            <div className="text-gray-600 space-y-3 text-sm">
+              <p>
+                <strong>Family-Only Site:</strong> This website is intended for family members only. We collect minimal personal information: names, email addresses, and requested dates through the Google Form.
+              </p>
+              <p>
+                <strong>Data Storage:</strong> Booking requests are stored in a Google Sheet restricted to the owner. Google handles all data processing under their privacy policies. We do not share your information with third parties.
+              </p>
+              <p>
+                <strong>Calendar Data:</strong> The shared Google Calendar displays booking availability and is publicly visible. Do not share personal information in calendar event titles or descriptions.
+              </p>
+              <p>
+                <strong>Email Communications:</strong> We only email confirmations and house information. Your email will not be added to mailing lists or shared.
+              </p>
+              <p>
+                <strong>Questions:</strong> Contact worralhouse@gmail.com with privacy concerns.
+              </p>
+            </div>
+          </div>
+
+          <div className="border-t pt-6">
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">Terms of Use</h3>
+            <div className="text-gray-600 space-y-3 text-sm">
+              <p>
+                <strong>Booking Process:</strong> Requests are approved automatically if dates are available. Approval confirmations are sent via email with check-in details and address.
+              </p>
+              <p>
+                <strong>Cancellations:</strong> If plans change, email worralhouse@gmail.com immediately so others can book those dates.
+              </p>
+              <p>
+                <strong>House Rules:</strong> All guests agree to follow the house rules outlined in the House Rules section. These cover cleanliness, quiet hours, maintenance, and guest conduct.
+              </p>
+              <p>
+                <strong>Liability:</strong> Guests use the house at their own risk. Report all damage or safety issues immediately. Accidents should be reported to Uncle Jim or Aunt Caroline.
+              </p>
+              <p>
+                <strong>Lockbox Code:</strong> Codes are provided via email. Do not share the code outside the family. Do not photograph or record the code.
+              </p>
+              <p>
+                <strong>Disputes:</strong> Any booking conflicts or rule violations will be resolved by family discussion and consensus.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer className="bg-gray-800 text-gray-400 py-8 px-4">
@@ -452,6 +510,7 @@ export default function App() {
       <RulesSection />
       <GuideSection />
       <ContactSection />
+      <PrivacySection />
       <Footer />
     </div>
   );
